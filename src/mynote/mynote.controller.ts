@@ -1,5 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body } from '@nestjs/common';
 import { MynoteService } from './mynote.service';
+import { MynoteDto } from './mynote.dto';
 
 @Controller('mynote')
 export class MynoteController {
@@ -9,17 +10,23 @@ export class MynoteController {
     }
 
     @Get()
-    checkOutput(): string {
-        return 'Output data from controller';
+    showAllData() {
+        return this.MynoteService.showAll();
+    }
+
+    @Post()
+    storeData (@Body() data: MynoteDto) {
+
+        return this.MynoteService.create(data);
     }
 
     @Get(':id')
-    checkDetail(@Param('id') id: string): string {
+    checkDetail (@Param('id') id: string): string {
         return 'Output data from controller detail ' + id;
     }
 
     @Get('service')
-    showAll() {
+    showAll () {
         return this.MynoteService.getAll();
     }
 }
