@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
 import { MynoteService } from './mynote.service';
 import { MynoteDto } from './mynote.dto';
 
@@ -21,12 +21,22 @@ export class MynoteController {
     }
 
     @Get(':id')
-    checkDetail (@Param('id') id: string): string {
-        return 'Output data from controller detail ' + id;
+    checkDetail (@Param('id') id: string) {
+        return this.MynoteService.getById(id);
     }
 
-    @Get('service')
-    showAll () {
-        return this.MynoteService.getAll();
+    @Put(':id')
+    updateData (@Param('id') id: string, @Body() data: Partial<MynoteDto>) {
+        return this.MynoteService.update(id, data);
     }
+
+    @Delete(':id')
+    destroyData (@Param('id') id: string) {
+        return this.MynoteService.delete(id);
+    }
+
+    // @Get('service')
+    // showAll () {
+    //     return this.MynoteService.getAll();
+    // }
 }

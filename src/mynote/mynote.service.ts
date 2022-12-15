@@ -29,4 +29,23 @@ export class MynoteService {
     async getAll () {
         return `this from service`;
     }
+
+    async getById (id: string) {
+        return await this.mynoteRepository.findOne({ where: { id } });
+    }
+
+    async update (id: string, data: Partial<MynoteDto>) {
+
+        await this.mynoteRepository.update({ id }, data);
+
+        return await this.mynoteRepository.findOne({ where: { id } });
+    }
+
+    async delete (id: string) {
+        await this.mynoteRepository.delete({ id });
+
+        return {
+            deleted: true
+        }
+    }
 }
